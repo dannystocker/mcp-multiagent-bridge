@@ -1,0 +1,22 @@
+# Claude Code Multi-Agent Bridge Requirements
+
+# Core MCP SDK for Model Context Protocol
+mcp>=1.0.0
+
+# Standard library dependencies (included with Python)
+# - asyncio
+# - json
+# - hmac
+# - hashlib
+# - secrets
+# - re
+# - sqlite3
+# - subprocess
+# - datetime
+# - pathlib
+
+# Optional: For enhanced features
+# redis>=4.0.0  # If using Redis instead of SQLite
+
+# Installation:
+# pip install -r requirements.txt
