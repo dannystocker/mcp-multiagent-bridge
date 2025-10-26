@@ -13,6 +13,14 @@ from pathlib import Path
 from typing import Optional, Dict, List
 from datetime import datetime
 
+# YOLO Guard integration (critical security component)
+try:
+    from yolo_guard import YOLOGuard
+    GUARD_AVAILABLE = True
+except ImportError:
+    GUARD_AVAILABLE = False
+    print("⚠️  yolo_guard.py not found - execution safeguards disabled!")
+
 
 class CommandValidator:
     """Validate and sanitize commands before execution"""
@@ -286,13 +294,14 @@ class YOLOMode:
         }
     
     def execute_command(self, conv_id: str, session_id: str, token: str,
-                       command: str, mode_override: str = None) -> Dict:
+                       command: str, mode_override: str = None,
+                       approval_token: str = None, dry_run: bool = False) -> Dict:
         """Execute command with validation"""
-        
+
         # Verify auth
         if not self.bridge._verify_token(conv_id, session_id, token):
             raise PermissionError("Invalid session token")
-        
+
         # Check if YOLO mode enabled for this conversation
         if conv_id not in self.executors:
             return {
@@ -300,13 +309,64 @@ class YOLOMode:
                 'error': 'YOLO mode not enabled for this conversation',
                 'hint': 'Use enable_yolo_mode first'
             }
-        
+
         executor = self.executors[conv_id]
-        
+
         # Get effective mode
         effective_mode = mode_override or self.mode
-        
+
         # Validate command
+        validation = CommandValidator.validate(command, effective_mode)
+
+        # If command validation fails, return early
+        if not validation['allowed']:
+            self.bridge._audit_log(conv_id, session_id, 'command_blocked', {
+                'command': command,
+                'reason': validation['reason']
+            })
+            return {
+                'success': False,
+                'blocked': True,
+                'reason': validation['reason'],
+                'command': command
+            }
+
+        # Dry run mode: show what would execute without actually running
+        if dry_run:
+            return {
+                'success': True,
+                'dry_run': True,
+                'message': 'Would execute (dry run mode)',
+                'command': validation['sanitized'],
+                'hint': 'Use approval_token parameter to execute for real'
+            }
+
+        # YOLO Guard check: require approval token for actual execution
+        if GUARD_AVAILABLE:
+            if not approval_token:
+                return {
+                    'success': False,
+                    'error': 'Execution requires approval token',
+                    'hint': 'Generate with: python yolo_guard.py --generate-token',
+                    'command_validated': validation['sanitized']
+                }
+
+            if not YOLOGuard.validate_approval_token(approval_token):
+                return {
+                    'success': False,
+                    'error': 'Invalid, expired, or already-used approval token',
+                    'hint': 'Generate new token with: python yolo_guard.py --generate-token'
+                }
+        else:
+            # No YOLO guard available - warn and block execution
+            return {
+                'success': False,
+                'error': 'yolo_guard.py not found - execution disabled for safety',
+                'hint': 'Ensure yolo_guard.py is in the same directory'
+            }
+
+        # Past this point: validation passed AND approval token validated
+        # Continue with original validation check
         validation = CommandValidator.validate(command, effective_mode)
         
         if not validation['allowed']:

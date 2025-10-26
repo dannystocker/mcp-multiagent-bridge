@@ -28,6 +28,14 @@ except ImportError:
     YOLO_AVAILABLE = False
     print("⚠️  YOLO mode not available (yolo_mode.py not found)", file=sys.stderr)
 
+# Import rate limiter (critical security component)
+try:
+    from rate_limiter import RateLimiter
+    RATE_LIMITER_AVAILABLE = True
+except ImportError:
+    RATE_LIMITER_AVAILABLE = False
+    print("⚠️  Rate limiter not available (rate_limiter.py not found)", file=sys.stderr)
+
 
 class SecretRedactor:
     """Redact sensitive data from messages"""
@@ -58,6 +66,17 @@ class SecureBridge:
     def __init__(self, db_path: str):
         self.db_path = db_path
         self.master_secret = secrets.token_bytes(32)  # Generate on startup
+
+        # Initialize rate limiter (10 req/min, 100 req/hour, 500 req/day)
+        if RATE_LIMITER_AVAILABLE:
+            self.rate_limiter = RateLimiter(
+                requests_per_minute=10,
+                requests_per_hour=100,
+                requests_per_day=500
+            )
+        else:
+            self.rate_limiter = None
+
         self.init_db()
     
     def init_db(self):
@@ -195,10 +214,16 @@ class SecureBridge:
             'expires_at': expires_at.isoformat()
         }
     
-    def send_message(self, conv_id: str, session_id: str, token: str, 
+    def send_message(self, conv_id: str, session_id: str, token: str,
                     message: str, metadata: dict = None) -> dict:
         """Send message with authentication and redaction"""
-        
+
+        # Check rate limit FIRST (before expensive operations)
+        if self.rate_limiter:
+            allowed, reason = self.rate_limiter.check_rate_limit(session_id)
+            if not allowed:
+                raise ValueError(f"Rate limit exceeded: {reason}")
+
         # Verify authentication
         if not self._verify_token(conv_id, session_id, token):
             raise PermissionError("Invalid session token")
