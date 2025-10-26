@@ -2,6 +2,25 @@
 
 Production-lean MCP server enabling two Claude Code CLI sessions to communicate securely.
 
+> ⚠️ **Beta Software**: Suitable for development/testing. See [Security Policy](SECURITY.md) before production use.
+
+## ⚠️ YOLO Mode Warning
+
+This project includes an optional YOLO mode for command execution. This is inherently dangerous and should only be used:
+- In isolated development environments
+- With explicit user confirmation
+- By users who understand the risks
+
+See [YOLO_MODE.md](YOLO_MODE.md) and [SECURITY.md](SECURITY.md) for details.
+
+## Policy Compliance
+
+This project complies with:
+- [Anthropic Acceptable Use Policy](https://www.anthropic.com/legal/aup)
+- [Anthropic Responsible Scaling Policy](https://www.anthropic.com/responsible-scaling-policy)
+
+Users are responsible for ensuring appropriate use and maintaining human oversight of all operations.
+
 ## Security Features ✅
 
 - **HMAC Authentication**: Session tokens prevent spoofing
@@ -11,6 +30,8 @@ Production-lean MCP server enabling two Claude Code CLI sessions to communicate 
 - **Token Expiration**: Conversations expire after 3 hours
 - **Schema Validation**: Strict JSON schemas for all tools
 - **No Auto-Execution**: Bridge returns proposals only - no command execution
+- **YOLO Guard**: Multi-stage confirmation for command execution (when enabled)
+- **Rate Limiting**: 10 req/min, 100 req/hour, 500 req/day per session
 
 ## Installation
 
