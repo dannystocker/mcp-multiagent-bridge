@@ -1,39 +1,69 @@
 # MCP Multiagent Bridge
+### Secure, rate-limited coordination for multiple LLM agents
+> *Because even AI agents need traffic lights.*
 
-Lightweight Python MCP server for secure multi-agent coordination with configurable rate limiting, auditable actions, and 4-stage YOLO confirmation flow for safe execution.
+Multi-agent systems are already here: backend agents debugging frontend agents, compliance bots reviewing security agents, and specialized models coordinating prod deployments.
+But nobody's built the safety layer that keeps them from trampling each other.
 
-> MCP Multiagent Bridge coordinates multiple LLM agents via the Model Context Protocol (MCP). Designed for experiments and small-scale deployments, it provides battle-tested security safeguards without sacrificing developer experience. Use it to prototype agent orchestration securely — plug in Claude, Codex, GPT, or other backends without rewriting core code.
+**MCP** is the protocol. **This** is the traffic control system.
 
-> ⚠️ **Beta Software**: Suitable for development/testing. See [Security Policy](SECURITY.md) before production use.
+---
 
-## ⚠️ YOLO Mode Warning
+## Why it exists
 
-This project includes an optional YOLO mode for command execution. This is inherently dangerous and should only be used:
-- In isolated development environments
-- With explicit user confirmation
-- By users who understand the risks
+Multi-agent execution is both powerful and horrifying.
+So this bridge adds layered safeguards:
+- Environment gate (explicit opt-in)
+- Typed confirmation phrase
+- One-time validation codes
+- Expiring approval tokens (because regret has a TTL)
 
-See [YOLO_MODE.md](YOLO_MODE.md) and [SECURITY.md](SECURITY.md) for details.
+> ⚠️ **Beta Software**: Built for development/testing environments with human supervision. See [Security Policy](SECURITY.md) before production use.
 
-## Policy Compliance
+---
 
-This project complies with:
-- [Anthropic Acceptable Use Policy](https://www.anthropic.com/legal/aup)
-- [Anthropic Responsible Scaling Policy](https://www.anthropic.com/responsible-scaling-policy)
+## Under the hood
 
-Users are responsible for ensuring appropriate use and maintaining human oversight of all operations.
+**Security:**
+- HMAC-SHA256 session authentication
+- Automatic secret redaction (API keys, passwords, tokens)
+- SQLite WAL mode for atomic operations
+- Comprehensive audit trail (JSONL format)
+- 3-hour conversation expiration
 
-## Security Features ✅
+**YOLO Guard™ (4-stage confirmation):**
+- Environment gate (`YOLO_MODE=1`)
+- Interactive typed confirmation
+- One-time validation codes
+- Time-limited approval tokens (5-min TTL, single-use)
+- Dry-run by default
 
-- **HMAC Authentication**: Session tokens prevent spoofing
-- **Automatic Secret Redaction**: Filters API keys, passwords, private keys
-- **Atomic Messaging**: SQLite WAL mode prevents race conditions
-- **Audit Trail**: All actions logged with timestamps
-- **Token Expiration**: Conversations expire after 3 hours
-- **Schema Validation**: Strict JSON schemas for all tools
-- **No Auto-Execution**: Bridge returns proposals only - no command execution
-- **YOLO Guard**: Multi-stage confirmation for command execution (when enabled)
-- **Rate Limiting**: 10 req/min, 100 req/hour, 500 req/day per session
+**Rate Limiting:**
+- Token bucket algorithm
+- 10 requests/minute, 100/hour, 500/day
+- Per-session tracking with automatic reset
+
+---
+
+## Paperwork
+
+All the boring-but-necessary stuff is here:
+- **[LICENSE](LICENSE)** - MIT (do what you want)
+- **[SECURITY.md](SECURITY.md)** - Threat model + responsible disclosure
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to help
+- **Policy compliance** - Anthropic & OpenAI friendly
+
+---
+
+## Works with
+
+Any MCP-compatible LLM:
+- Claude (Code, Desktop, API)
+- OpenAI models via MCP adapters
+- Anthropic API models
+- Future: Codex, GPT, custom models
+
+Not tied to any specific backend. Build once, swap models freely.
 
 ## Installation
 

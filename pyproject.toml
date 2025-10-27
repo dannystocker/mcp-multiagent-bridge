@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mcp-multiagent-bridge"
 version = "1.0.0-beta"
-description = "Python MCP server for secure multi-agent coordination with 4-stage YOLO safeguards and rate limiting"
+description = "Secure multi-agent coordination for LLMs — because even AI agents need traffic lights"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
