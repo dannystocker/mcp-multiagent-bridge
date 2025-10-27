@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mcp-multiagent-bridge"
 version = "1.0.0-beta"
-description = "Secure multi-agent coordination for LLMs — because even AI agents need traffic lights"
+description = "Production-ready Python MCP server for secure multi-agent coordination with 4-stage safeguards and rate limiting"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
