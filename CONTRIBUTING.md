@@ -68,8 +68,8 @@ Closes #15
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/claude-code-bridge.git
-cd claude-code-bridge
+git clone https://github.com/YOUR_USERNAME/mcp-multiagent-bridge.git
+cd mcp-multiagent-bridge
 
 # Install dependencies
 pip install -r requirements.txt

@@ -95,8 +95,8 @@ Claude Code Bridge is a secure, production-lean MCP server that enables two Clau
 
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/claude-code-bridge.git
-cd claude-code-bridge
+git clone https://github.com/YOUR_USERNAME/mcp-multiagent-bridge.git
+cd mcp-multiagent-bridge
 
 # Install dependencies
 pip install mcp>=1.0.0

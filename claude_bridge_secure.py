@@ -345,7 +345,7 @@ class SecureBridge:
 
 
 # MCP Server Setup
-app = Server("claude-code-bridge-secure")
+app = Server("mcp-multiagent-bridge")
 bridge = None  # Will be initialized with db_path
 yolo = None    # Will be initialized if YOLO mode enabled
 
