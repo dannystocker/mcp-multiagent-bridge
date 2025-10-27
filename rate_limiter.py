@@ -37,10 +37,11 @@ class RateLimiter:
         self.rpd = requests_per_day
 
         # Session buckets: session_id -> {minute: {...}, hour: {...}, day: {...}}
+        # Initialize reset_at to FUTURE time so bucket doesn't immediately reset
         self.buckets = defaultdict(lambda: {
-            'minute': {'count': 0, 'reset_at': datetime.now()},
-            'hour': {'count': 0, 'reset_at': datetime.now()},
-            'day': {'count': 0, 'reset_at': datetime.now()}
+            'minute': {'count': 0, 'reset_at': datetime.now() + timedelta(minutes=1)},
+            'hour': {'count': 0, 'reset_at': datetime.now() + timedelta(hours=1)},
+            'day': {'count': 0, 'reset_at': datetime.now() + timedelta(days=1)}
         })
 
     def check_rate_limit(self, session_id: str) -> Tuple[bool, str]:
