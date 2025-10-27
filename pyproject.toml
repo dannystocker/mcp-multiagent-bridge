@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-multiagent-bridge"
+version = "1.0.0-beta"
+description = "Python MCP server for secure multi-agent coordination with 4-stage YOLO safeguards and rate limiting"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Danny Stocker", email = "danny.stocker@gmail.com"}
+]
+keywords = ["mcp", "multi-agent", "agents", "ai", "llm", "bridge", "python", "security", "rate-limiting", "audit-logs"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.0.0,<2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/dannystocker/mcp-multiagent-bridge"
+Repository = "https://github.com/dannystocker/mcp-multiagent-bridge"
+Issues = "https://github.com/dannystocker/mcp-multiagent-bridge/issues"
+Documentation = "https://github.com/dannystocker/mcp-multiagent-bridge#readme"
+
+[project.scripts]
+claude-bridge = "claude_bridge_secure:main"
+bridge-cli = "bridge_cli:main"
+
+[tool.bandit]
+exclude_dirs = ["tests", "scripts"]
+skips = ["B101"]  # Skip assert_used warnings in tests
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "SIM"]
+ignore = ["E501"]  # Line length handled by formatter

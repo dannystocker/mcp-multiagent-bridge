@@ -1,6 +1,8 @@
-# Secure Claude Code Multi-Agent Bridge
+# MCP Multiagent Bridge
 
-Production-lean MCP server enabling two Claude Code CLI sessions to communicate securely.
+Lightweight Python MCP server for secure multi-agent coordination with configurable rate limiting, auditable actions, and 4-stage YOLO confirmation flow for safe execution.
+
+> MCP Multiagent Bridge coordinates multiple LLM agents via the Model Context Protocol (MCP). Designed for experiments and small-scale deployments, it provides battle-tested security safeguards without sacrificing developer experience. Use it to prototype agent orchestration securely — plug in Claude, Codex, GPT, or other backends without rewriting core code.
 
 > ⚠️ **Beta Software**: Suitable for development/testing. See [Security Policy](SECURITY.md) before production use.
 
