@@ -11,8 +11,8 @@
 **DO NOT** open a public GitHub issue for security vulnerabilities.
 
 Instead, please report security issues responsibly:
-- Create a private security advisory on GitHub
-- Or email: [your-email]@[domain].com (replace with actual email)
+- Create a private security advisory on GitHub (preferred)
+- Or email: danny.stocker@gmail.com
 - Subject: "SECURITY: Claude Code Bridge - [brief description]"
 
 Please include:
@@ -189,7 +189,7 @@ When using this bridge:
 
 For security concerns:
 - GitHub Security Advisories (preferred)
-- Email: [Add your email here]
+- Email: danny.stocker@gmail.com
 
 For general questions:
 - GitHub Issues
