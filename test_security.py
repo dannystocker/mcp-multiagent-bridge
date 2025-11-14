@@ -122,7 +122,7 @@ def test_integration():
     print("\nTesting integration...")
 
     try:
-        from claude_bridge_secure import SecureBridge, RATE_LIMITER_AVAILABLE
+        from agent_bridge_secure import SecureBridge, RATE_LIMITER_AVAILABLE
 
         if not RATE_LIMITER_AVAILABLE:
             print("  ❌ Rate limiter not integrated into SecureBridge")

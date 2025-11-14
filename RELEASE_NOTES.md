@@ -129,7 +129,7 @@ cd mcp-multiagent-bridge
 pip install mcp>=1.0.0
 
 # Make executable
-chmod +x claude_bridge_secure.py
+chmod +x agent_bridge_secure.py
 ```
 
 ### 2. Configure MCP Server
@@ -141,7 +141,7 @@ Add to `~/.claude.json`:
   "mcpServers": {
     "bridge": {
       "command": "python3",
-      "args": ["/absolute/path/to/claude_bridge_secure.py"],
+      "args": ["/absolute/path/to/agent_bridge_secure.py"],
       "env": {}
     }
   }

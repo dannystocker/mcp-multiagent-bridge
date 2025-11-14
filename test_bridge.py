@@ -11,7 +11,7 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).parent))
 
-from claude_bridge_secure import SecureBridge, SecretRedactor
+from agent_bridge_secure import SecureBridge, SecretRedactor
 
 
 def test_secret_redaction():

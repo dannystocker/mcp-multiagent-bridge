@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 class BridgeCLI:
-    def __init__(self, db_path: str = "/tmp/claude_bridge_secure.db"):
+    def __init__(self, db_path: str = "/tmp/agent_bridge_secure.db"):
         self.db_path = db_path
     
     def list_conversations(self):

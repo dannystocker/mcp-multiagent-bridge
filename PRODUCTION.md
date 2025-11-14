@@ -132,7 +132,7 @@ pip install mcp>=1.0.0
   "mcpServers": {
     "bridge": {
       "command": "python3",
-      "args": ["/absolute/path/to/claude_bridge_secure.py"]
+      "args": ["/absolute/path/to/agent_bridge_secure.py"]
     }
   }
 }
@@ -306,7 +306,7 @@ scripts/production/fs-watcher.sh <conv_id> <token> &
 
 **Solution:**
 ```python
-# Increase rate limits in claude_bridge_secure.py
+# Increase rate limits in agent_bridge_secure.py
 RATE_LIMITS = {
     "per_minute": 100,  # Increased from 10
     "per_hour": 500,
@@ -382,7 +382,7 @@ scripts/production/keepalive-daemon.sh "$CONV_ID" "$TOKEN" &
 
 **Solution:**
 ```python
-# Enable WAL mode (automatic in claude_bridge_secure.py)
+# Enable WAL mode (automatic in agent_bridge_secure.py)
 conn.execute('PRAGMA journal_mode=WAL')
 ```
 
