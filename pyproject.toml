@@ -34,7 +34,9 @@ Issues = "https://github.com/dannystocker/mcp-multiagent-bridge/issues"
 Documentation = "https://github.com/dannystocker/mcp-multiagent-bridge#readme"
 
 [project.scripts]
-claude-bridge = "claude_bridge_secure:main"
+agent-bridge = "agent_bridge_secure:run_cli"
+claude-bridge = "claude_mcp_bridge_secure:run_cli"
+codex-bridge = "codex_mcp_bridge_secure:run_cli"
 bridge-cli = "bridge_cli:main"
 
 [tool.bandit]

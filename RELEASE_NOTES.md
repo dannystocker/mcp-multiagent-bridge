@@ -71,7 +71,7 @@ Claude Code Bridge is a secure, production-lean MCP server that enables two Clau
 ## 📦 What's Included
 
 ### Core Components
-- **`claude_bridge_secure.py`** - Main MCP server with rate limiting
+- **`agent_bridge_secure.py`** - Main MCP server with rate limiting
 - **`yolo_guard.py`** - Multi-stage confirmation system
 - **`rate_limiter.py`** - Token bucket rate limiter
 - **`bridge_cli.py`** - CLI management tool

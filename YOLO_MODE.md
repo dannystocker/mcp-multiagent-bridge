@@ -75,7 +75,7 @@ npm run build
 
 ### 1. Place YOLO module
 
-Ensure `yolo_mode.py` is in the same directory as `claude_bridge_secure.py`.
+Ensure `yolo_mode.py` is in the same directory as `agent_bridge_secure.py`.
 
 ### 2. Enable YOLO mode in conversation
 

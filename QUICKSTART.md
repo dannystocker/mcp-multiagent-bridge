@@ -6,7 +6,7 @@ Production-ready MCP server enabling secure collaboration between two Claude Cod
 
 ```
 .
-├── claude_bridge_secure.py    # Main MCP bridge server (secure, production-ready)
+├── agent_bridge_secure.py    # Main MCP bridge server (secure, production-ready)
 ├── yolo_mode.py                # Command execution extension (use with caution)
 ├── bridge_cli.py               # Management CLI tool
 ├── test_bridge.py              # Test suite
@@ -34,7 +34,7 @@ Add to `~/.claude.json`:
   "mcpServers": {
     "bridge": {
       "command": "python3",
-      "args": ["/absolute/path/to/claude_bridge_secure.py"]
+      "args": ["/absolute/path/to/agent_bridge_secure.py"]
     }
   }
 }
@@ -200,10 +200,10 @@ Before using in production:
 cat ~/.claude.json
 
 # 2. Check absolute path
-ls -l /path/to/claude_bridge_secure.py
+ls -l /path/to/agent_bridge_secure.py
 
 # 3. Test server directly
-python3 claude_bridge_secure.py /tmp/test.db
+python3 agent_bridge_secure.py /tmp/test.db
 
 # 4. Restart Claude Code
 ```
@@ -227,7 +227,7 @@ python3 bridge_cli.py tokens conv_...
 ls -l yolo_mode.py
 
 # 2. Check same directory as bridge
-ls -l claude_bridge_secure.py yolo_mode.py
+ls -l agent_bridge_secure.py yolo_mode.py
 
 # 3. Test import
 python3 -c "from yolo_mode import YOLOMode; print('OK')"

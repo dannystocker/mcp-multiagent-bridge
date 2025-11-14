@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Secure Claude Code Multi-Agent Bridge
+Secure Agent Multi-Agent Bridge
 Production-lean MCP server with auth, redaction, and safety controls
 """
 
@@ -696,13 +696,13 @@ Note: Your partner can see this result via check_messages"""
         return [TextContent(type="text", text=f"❌ Error: {str(e)}")]
 
 
-async def main(db_path: str = "/tmp/claude_bridge_secure.db"):
+async def main(db_path: str = "/tmp/agent_bridge_secure.db"):
     """Run the secure MCP server"""
     global bridge
     bridge = SecureBridge(db_path)
-    
+
     from mcp.server.stdio import stdio_server
-    
+
     async with stdio_server() as (read_stream, write_stream):
         await app.run(
             read_stream,
@@ -711,8 +711,14 @@ async def main(db_path: str = "/tmp/claude_bridge_secure.db"):
         )
 
 
-if __name__ == "__main__":
+def run_cli(argv: Optional[Iterable[str]] = None) -> None:
+    """Entry point used by direct execution and compatibility shims."""
     import sys
-    db_path = sys.argv[1] if len(sys.argv) > 1 else "/tmp/claude_bridge_secure.db"
+    args = list(argv if argv is not None else sys.argv[1:])
+    db_path = args[0] if args else "/tmp/agent_bridge_secure.db"
     print(f"Starting secure bridge with database: {db_path}", file=sys.stderr)
     asyncio.run(main(db_path))
+
+
+if __name__ == "__main__":
+    run_cli()

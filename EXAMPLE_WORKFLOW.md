@@ -8,7 +8,7 @@ This example shows how two Claude Code sessions can collaborate on building a Fa
 
 ```bash
 cd /path/to/bridge
-python3 claude_bridge_secure.py /tmp/dev_bridge.db
+python3 agent_bridge_secure.py /tmp/dev_bridge.db
 ```
 
 ### Terminal 2: Backend Session (Session A)
